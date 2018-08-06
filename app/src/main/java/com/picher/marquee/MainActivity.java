@@ -2,6 +2,7 @@ package com.picher.marquee;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.picher.marquee.view.CustomerTextView;
@@ -25,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         strings.add("Start! 2222222 End！！");
         strings.add("Start! 3333333 End！！");
         customerTextView.setContentList(strings);
+
+        customerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("picher",""+customerTextView.getCurrentIndex());
+            }
+        });
     }
 
     public void clickStart(View v){

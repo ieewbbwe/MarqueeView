@@ -22,8 +22,6 @@ import com.picher.marquee.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 /**
  * Created by picher on 2018/8/2.
@@ -278,6 +276,10 @@ public class CustomerTextView extends AppCompatTextView {
         Rect rect = new Rect();
         contentPaint.getTextBounds(str, 0, str.length(), rect);
         return rect;
+    }
+
+    public int getCurrentIndex(){
+        return isScrollNext ? mCurrentIndex+1 : mCurrentIndex + 1;
     }
 
     public void start(){
