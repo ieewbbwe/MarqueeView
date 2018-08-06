@@ -1,0 +1,9 @@
+<resources>
+
+    <declare-styleable name="CustomerTextView">
+        <!--每条item切换的时间间隔-->
+        <attr name="switch_item_duration" format="integer" />
+        <!--滚动完成 切换到下一条前的时间间隔-->
+        <attr name="next_pause_duration" format="integer" />
+    </declare-styleable>
+</resources>

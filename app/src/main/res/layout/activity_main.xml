@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.picher.marquee.MainActivity">
+
+   <com.picher.marquee.view.CustomerTextView
+       android:id="@+id/marqueeView"
+       android:layout_width="match_parent"
+       android:padding="8dp"
+       android:background="#0094ff"
+       android:layout_height="wrap_content" />
+
+   <Button
+       android:text="开始"
+       android:onClick="clickStart"
+       android:layout_marginTop="50dp"
+       app:layout_constraintTop_toBottomOf="@+id/marqueeView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+
+   <Button
+       android:text="暂停"
+       android:onClick="clickPause"
+       android:layout_marginTop="100dp"
+       app:layout_constraintTop_toBottomOf="@+id/marqueeView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>
