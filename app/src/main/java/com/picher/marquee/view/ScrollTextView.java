@@ -1,7 +1,5 @@
 package com.picher.marquee.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -64,7 +62,7 @@ public class ScrollTextView extends View {
 		animator.start();
 	}
 
-	public void reset(){
+	public void reset() {
 		dx = 0;
 	}
 

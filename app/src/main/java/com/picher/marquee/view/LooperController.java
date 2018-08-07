@@ -1,13 +1,8 @@
 package com.picher.marquee.view;
 
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ViewFlipper;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author keep2iron <a href="http://keep2iron.github.io">Contract me.</a>
