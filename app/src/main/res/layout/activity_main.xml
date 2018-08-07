@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.picher.marquee.MainActivity">
 
-   <com.picher.marquee.view.CustomerTextView
+   <com.picher.marquee.view.CustomerMarqueeTextView
        android:id="@+id/marqueeView"
        android:layout_width="match_parent"
        android:padding="8dp"
-       android:background="#0094ff"
+       android:textColor="@android:color/black"
+       android:textSize="14sp"
+       android:background="#ffd800"
        android:layout_height="wrap_content" />
 
    <Button

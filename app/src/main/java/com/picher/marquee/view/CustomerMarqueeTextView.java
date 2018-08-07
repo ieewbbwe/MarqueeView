@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
-
 import com.picher.marquee.R;
 
 import java.util.ArrayList;
@@ -28,12 +27,18 @@ import java.util.List;
  * Describe：Scrolling TextView
  */
 
-public class CustomerTextView extends AppCompatTextView {
+public class CustomerMarqueeTextView extends AppCompatTextView {
 
     // 切换下一条之前的停顿时间
-    private static final int DEFAULT_PAUSE_TIME = 2000;
-    // 默认一条滑动时间
-    private static final int DEFAULT_SCROLL_TIME = 6000;
+    private static final int DEFAULT_PAUSE_TIME = 5000;
+    // 默认切换一条的时间
+    private static final int DEFAULT_SCROLL_TIME = 500;
+    // 超长文本滚动完当前的时间
+    private static final int DEFAULT_SCROLL_NOW_TIME = 5000;
+    // 默认文本大小
+    private static final int DEFAULT_CONTENT_SIZE = 50;
+    // 默认文本颜色
+    private static final int DEFAULT_CONTENT_COLOR = Color.BLACK;
 
     private ArrayList<String> mContentList = new ArrayList<>();
 
@@ -66,19 +71,25 @@ public class CustomerTextView extends AppCompatTextView {
     private int mSwitchDuration;
     private int mNextPauseDuration;
 
-    public CustomerTextView(Context context) {
+    public CustomerMarqueeTextView(Context context) {
         this(context, null);
     }
 
-    public CustomerTextView(Context context, AttributeSet attrs) {
+    public CustomerMarqueeTextView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CustomerTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomerMarqueeTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.CustomerTextView);
-        mNextPauseDuration = array.getInt(R.styleable.CustomerTextView_next_pause_duration, DEFAULT_PAUSE_TIME);
-        mSwitchDuration = array.getInt(R.styleable.CustomerTextView_switch_item_duration, DEFAULT_SCROLL_TIME);
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.CustomerMarqueeTextView);
+        mNextPauseDuration = array.getInt(R.styleable.CustomerMarqueeTextView_next_pause_duration, DEFAULT_PAUSE_TIME);
+        mSwitchDuration = array.getInt(R.styleable.CustomerMarqueeTextView_switch_item_duration, DEFAULT_SCROLL_TIME);
+        if (array.hasValue(R.styleable.CustomerMarqueeTextView_switch_item_duration)) {
+            contentTextSize = (int) array.getDimension(R.styleable.CustomerMarqueeTextView_switch_item_duration, DEFAULT_CONTENT_SIZE);
+        }
+        contentColor = array.getColor(R.styleable.CustomerMarqueeTextView_content_text_color, DEFAULT_CONTENT_COLOR);
+        array.recycle();
+
         init();
     }
 
@@ -88,6 +99,7 @@ public class CustomerTextView extends AppCompatTextView {
 
     private void init() {
         contentPaint = new Paint();
+        contentPaint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
         contentPaint.setAntiAlias(true);
         contentPaint.setDither(true);
         contentPaint.setTextSize(contentTextSize);
@@ -183,14 +195,14 @@ public class CustomerTextView extends AppCompatTextView {
      */
     private void startScrollNow() {
         isScrollNow = true;
-        horizontalScroll(0, (screenIndex - 1) * viewWidth, new LinearInterpolator(), new AnimatorListenerAdapter() {
+        horizontalScroll(0, (screenIndex - 1) * viewWidth, DEFAULT_SCROLL_NOW_TIME, new LinearInterpolator(), new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                // 滚动完成后 停顿2秒 切换下一条
                 delay(mNextPauseDuration, new Runnable() {
                     @Override
                     public void run() {
+                        isScrollNext = true;
                         horizontalScroll((screenIndex - 1) * viewWidth, screenIndex * viewWidth, new AccelerateDecelerateInterpolator(), new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animator animation) {
@@ -198,6 +210,7 @@ public class CustomerTextView extends AppCompatTextView {
                                 delay(mNextPauseDuration, new Runnable() {
                                     @Override
                                     public void run() {
+                                        isScrollNext = false;
                                         isScrollNow = false;
                                         nextRefresh();
                                     }
@@ -247,12 +260,16 @@ public class CustomerTextView extends AppCompatTextView {
     }
 
     private void delay(int ms, Runnable runnable) {
-       new Handler().postDelayed(runnable, ms);
+        new Handler().postDelayed(runnable, ms);
     }
 
     private void horizontalScroll(int start, int end, TimeInterpolator interpolator, AnimatorListenerAdapter animatorListenerAdapter) {
+        horizontalScroll(start, end, mSwitchDuration, interpolator, animatorListenerAdapter);
+    }
+
+    private void horizontalScroll(int start, int end, int time, TimeInterpolator interpolator, AnimatorListenerAdapter animatorListenerAdapter) {
         ValueAnimator animator = ValueAnimator.ofFloat(start, end);
-        animator.setDuration(mSwitchDuration);
+        animator.setDuration(time);
         animator.setInterpolator(interpolator);
         animator.start();
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -278,17 +295,24 @@ public class CustomerTextView extends AppCompatTextView {
         return rect;
     }
 
-    public int getCurrentIndex(){
-        return isScrollNext ? mCurrentIndex+1 : mCurrentIndex + 1;
+    public int getCurrentIndex() {
+        if (isScrollNext) {
+            if (mCurrentIndex + 1 >= mContentList.size()) {
+                return 0;
+            } else {
+                return mCurrentIndex + 1;
+            }
+        }
+        return mCurrentIndex;
     }
 
-    public void start(){
+    public void start() {
         isStart = true;
         isPause = false;
         postInvalidate();
     }
 
-    public void pause(){
+    public void pause() {
         isPause = true;
         isStart = false;
         postInvalidate();

@@ -1,9 +1,13 @@
 <resources>
 
-    <declare-styleable name="CustomerTextView">
+    <declare-styleable name="CustomerMarqueeTextView">
         <!--每条item切换的时间间隔-->
         <attr name="switch_item_duration" format="integer" />
         <!--滚动完成 切换到下一条前的时间间隔-->
         <attr name="next_pause_duration" format="integer" />
+        <!--内容文字颜色-->
+        <attr name="content_text_color" format="color|reference" />
+        <!--内容文字大小-->
+        <attr name="content_text_size" format="dimension|reference" />
     </declare-styleable>
 </resources>

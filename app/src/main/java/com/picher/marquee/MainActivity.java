@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.picher.marquee.view.CustomerTextView;
+import com.picher.marquee.view.CustomerMarqueeTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CustomerTextView customerTextView;
+    private CustomerMarqueeTextView customerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
