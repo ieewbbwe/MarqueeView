@@ -5,41 +5,72 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.picher.marquee.view.CustomerMarqueeTextView;
+import com.picher.marquee.view.CustomerMarqueeView;
+import com.picher.marquee.view.FlipperMarqueeView;
+import com.picher.marquee.view.RecycleMarqueeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CustomerMarqueeTextView customerTextView;
+    private CustomerMarqueeView customerMarqueeView;
+    List<String> marqueeText = new ArrayList<>();
+    private RecycleMarqueeView recycleMarqueeView;
+    private FlipperMarqueeView flipperMarquee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        marqueeText.add("Start! 11111111111111111111111111111111111111111111111111111 End！！");
+        //marqueeText.add("Start! 1111111 End！！");
+        marqueeText.add("Start! 2222222 End！！");
+        marqueeText.add("Start! 3333333 End！！");
+        customerMarqueeView = findViewById(R.id.marqueeView);
+        flipperMarquee = findViewById(R.id.flipperMarquee);
+        recycleMarqueeView = findViewById(R.id.recycleMarquee);
 
-        customerTextView = findViewById(R.id.marqueeView);
-        List<String> strings = new ArrayList<>();
-        strings.add("Start! 11111111111111111111111111111111111111111111111111111 End！！");
-        //strings.add("Start! 1111111 End！！");
-        strings.add("Start! 2222222 End！！");
-        strings.add("Start! 3333333 End！！");
-        customerTextView.setContentList(strings);
+        flipperMarquee();
+        recycleViewMarquee();
+        customerMarquee();
 
-        customerTextView.setOnClickListener(new View.OnClickListener() {
+    }
+
+    /**
+     * Flipper 实现
+     */
+    private void flipperMarquee() {
+        flipperMarquee.setContentList(marqueeText);
+    }
+
+    /**
+     * recycleView 跑马灯
+     */
+    private void recycleViewMarquee() {
+        recycleMarqueeView.setContentList(marqueeText);
+    }
+
+    /**
+     * 自定义控件_Draw() 跑马灯
+     */
+    private void customerMarquee() {
+        customerMarqueeView.setContentList(marqueeText);
+        customerMarqueeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("picher",""+customerTextView.getCurrentIndex());
+                Log.d("picher","" + customerMarqueeView.getCurrentIndex());
             }
         });
     }
 
     public void clickStart(View v){
-        customerTextView.start();
+        customerMarqueeView.start();
+        recycleMarqueeView.start();
+        flipperMarquee.start();
     }
 
     public void clickPause(View v){
-        customerTextView.pause();
+        customerMarqueeView.pause();
     }
 }

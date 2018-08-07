@@ -27,7 +27,7 @@ import java.util.List;
  * Describe：Scrolling TextView
  */
 
-public class CustomerMarqueeTextView extends AppCompatTextView {
+public class CustomerMarqueeView extends AppCompatTextView {
 
     // 切换下一条之前的停顿时间
     private static final int DEFAULT_PAUSE_TIME = 5000;
@@ -71,23 +71,23 @@ public class CustomerMarqueeTextView extends AppCompatTextView {
     private int mSwitchDuration;
     private int mNextPauseDuration;
 
-    public CustomerMarqueeTextView(Context context) {
+    public CustomerMarqueeView(Context context) {
         this(context, null);
     }
 
-    public CustomerMarqueeTextView(Context context, AttributeSet attrs) {
+    public CustomerMarqueeView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CustomerMarqueeTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomerMarqueeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.CustomerMarqueeTextView);
-        mNextPauseDuration = array.getInt(R.styleable.CustomerMarqueeTextView_next_pause_duration, DEFAULT_PAUSE_TIME);
-        mSwitchDuration = array.getInt(R.styleable.CustomerMarqueeTextView_switch_item_duration, DEFAULT_SCROLL_TIME);
-        if (array.hasValue(R.styleable.CustomerMarqueeTextView_switch_item_duration)) {
-            contentTextSize = (int) array.getDimension(R.styleable.CustomerMarqueeTextView_switch_item_duration, DEFAULT_CONTENT_SIZE);
+        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.CustomerMarqueeView);
+        mNextPauseDuration = array.getInt(R.styleable.CustomerMarqueeView_next_pause_duration, DEFAULT_PAUSE_TIME);
+        mSwitchDuration = array.getInt(R.styleable.CustomerMarqueeView_switch_item_duration, DEFAULT_SCROLL_TIME);
+        if (array.hasValue(R.styleable.CustomerMarqueeView_switch_item_duration)) {
+            contentTextSize = (int) array.getDimension(R.styleable.CustomerMarqueeView_switch_item_duration, DEFAULT_CONTENT_SIZE);
         }
-        contentColor = array.getColor(R.styleable.CustomerMarqueeTextView_content_text_color, DEFAULT_CONTENT_COLOR);
+        contentColor = array.getColor(R.styleable.CustomerMarqueeView_content_text_color, DEFAULT_CONTENT_COLOR);
         array.recycle();
 
         init();
