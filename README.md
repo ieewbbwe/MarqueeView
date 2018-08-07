@@ -3,7 +3,7 @@
 感谢好基友<a href="https://github.com/keep2iron">Keep2iron</a>帮助
 
 效果图如下：
-<img src="https://img-blog.csdn.net/20180807183916225?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21veGlvdWhhbw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/>
+<img src="https://i.imgur.com/XmLwBXN.gif"/>
 
 思路是：
 1. 绘制当前文本
